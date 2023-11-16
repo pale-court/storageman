@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "storageman"
+version = "0.1.0"
+description = ""
+authors = ["Lars Viklund <zao@zao.se>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+psycopg = {extras = ["binary", "pool"], version = "^3.1.12"}
+
+[tool.poetry.scripts]
+bulk_ingest = "storageman.bulk_ingest:main"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
