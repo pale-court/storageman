@@ -5,6 +5,7 @@ from pathlib import Path
 import os
 from typing import Set
 import psycopg
+from zstandard import ZstdCompressor
 
 DATA_DIR = Path(os.environ.get("INYA_DATA_DIR", "/mnt/inya/data"))
 
@@ -79,8 +80,16 @@ def main():
 
                         # Prepare new row
                         data = entry[1]()
-                        # print(len(data))
-                        scheme = "zstd" if entry[2] else None
+                        is_compressed = entry[2]
+
+                        if not is_compressed:
+                            zctx = ZstdCompressor()
+                            cdata = zctx.compress(data)
+                            if len(cdata) < len(data):
+                                data = cdata
+                                is_compressed = True
+
+                        scheme = "zstd" if is_compressed else None
                         tup = (hash, data, scheme)
                         copy.write_row(tup)
 
