@@ -12,6 +12,7 @@ zstandard = "^0.22.0"
 
 [tool.poetry.scripts]
 bulk_ingest = "storageman.bulk_ingest:main"
+ingest_indices = "storageman.ingest_indices:main"
 recompress = "storageman.recompress:main"
 fix_multicompress = "storageman.fix_multicompress:main"
 
